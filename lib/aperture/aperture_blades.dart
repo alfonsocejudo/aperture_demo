@@ -25,7 +25,7 @@ class ApertureBlades extends StatefulWidget {
 
 class _ApertureBladesState extends State<ApertureBlades>
     with SingleTickerProviderStateMixin {
-  static const leafBorderWidth = 2.0;
+  static const apertureBorderWidth = 2.0;
   static const open1 = 0.78;
   static const open2 = 0.33;
 
@@ -101,9 +101,9 @@ class _ApertureBladesState extends State<ApertureBlades>
   @override
   Widget build(BuildContext context) {
     final boxWidth = widget.bladeWidth;
-    final leafHeight =
+    final bladeHeight =
         math.sqrt((math.pow(boxWidth, 2) - math.pow((boxWidth / 2), 2)));
-    final heightDelta = boxWidth - leafHeight;
+    final heightDelta = boxWidth - bladeHeight;
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
@@ -127,7 +127,7 @@ class _ApertureBladesState extends State<ApertureBlades>
                       height: boxWidth,
                       child: CustomPaint(
                         painter: ApertureBladePainter(
-                            borderWidth: leafBorderWidth,
+                            borderWidth: apertureBorderWidth,
                             rotationRadians: math.pi),
                       ),
                     ),
@@ -139,31 +139,11 @@ class _ApertureBladesState extends State<ApertureBlades>
                 ),
               ),
               Positioned(
-                left: centerX - leafBorderWidth,
+                left: centerX - apertureBorderWidth,
                 top: centerY -
-                    (boxWidth - leafHeight) -
-                    leafHeight +
-                    (leafBorderWidth / 2),
-                child: AnimatedBuilder(
-                  animation: animationController,
-                  child: FittedBox(
-                    fit: BoxFit.none,
-                    child: SizedBox(
-                      width: boxWidth,
-                      height: boxWidth,
-                      child: CustomPaint(
-                        painter:
-                            ApertureBladePainter(borderWidth: leafBorderWidth),
-                      ),
-                    ),
-                  ),
-                  builder: (context, child) =>
-                      SlideTransition(position: _slide2, child: child),
-                ),
-              ),
-              Positioned(
-                left: centerX + boxWidth - leafBorderWidth,
-                top: centerY + heightDelta + leafHeight,
+                    (boxWidth - bladeHeight) -
+                    bladeHeight +
+                    (apertureBorderWidth / 2),
                 child: AnimatedBuilder(
                   animation: animationController,
                   child: FittedBox(
@@ -173,7 +153,27 @@ class _ApertureBladesState extends State<ApertureBlades>
                       height: boxWidth,
                       child: CustomPaint(
                         painter: ApertureBladePainter(
-                            borderWidth: leafBorderWidth,
+                            borderWidth: apertureBorderWidth),
+                      ),
+                    ),
+                  ),
+                  builder: (context, child) =>
+                      SlideTransition(position: _slide2, child: child),
+                ),
+              ),
+              Positioned(
+                left: centerX + boxWidth - apertureBorderWidth,
+                top: centerY + heightDelta + bladeHeight,
+                child: AnimatedBuilder(
+                  animation: animationController,
+                  child: FittedBox(
+                    fit: BoxFit.none,
+                    child: SizedBox(
+                      width: boxWidth,
+                      height: boxWidth,
+                      child: CustomPaint(
+                        painter: ApertureBladePainter(
+                            borderWidth: apertureBorderWidth,
                             rotationRadians: math.pi),
                       ),
                     ),
@@ -195,8 +195,8 @@ class _ApertureBladesState extends State<ApertureBlades>
                       width: boxWidth,
                       height: boxWidth,
                       child: CustomPaint(
-                        painter:
-                            ApertureBladePainter(borderWidth: leafBorderWidth),
+                        painter: ApertureBladePainter(
+                            borderWidth: apertureBorderWidth),
                       ),
                     ),
                   ),
@@ -207,8 +207,8 @@ class _ApertureBladesState extends State<ApertureBlades>
                 ),
               ),
               Positioned(
-                left: centerX + leafBorderWidth,
-                top: centerY + heightDelta + leafHeight,
+                left: centerX + apertureBorderWidth,
+                top: centerY + heightDelta + bladeHeight,
                 child: AnimatedBuilder(
                   animation: animationController,
                   child: FittedBox(
@@ -218,7 +218,7 @@ class _ApertureBladesState extends State<ApertureBlades>
                       height: boxWidth,
                       child: CustomPaint(
                         painter: ApertureBladePainter(
-                            borderWidth: leafBorderWidth,
+                            borderWidth: apertureBorderWidth,
                             rotationRadians: math.pi),
                       ),
                     ),
@@ -230,8 +230,11 @@ class _ApertureBladesState extends State<ApertureBlades>
                 ),
               ),
               Positioned(
-                left: centerX - boxWidth + leafBorderWidth,
-                top: centerY - heightDelta - leafHeight + (leafBorderWidth / 2),
+                left: centerX - boxWidth + apertureBorderWidth,
+                top: centerY -
+                    heightDelta -
+                    bladeHeight +
+                    (apertureBorderWidth / 2),
                 child: AnimatedBuilder(
                   animation: animationController,
                   child: FittedBox(
@@ -240,8 +243,8 @@ class _ApertureBladesState extends State<ApertureBlades>
                       width: boxWidth,
                       height: boxWidth,
                       child: CustomPaint(
-                        painter:
-                            ApertureBladePainter(borderWidth: leafBorderWidth),
+                        painter: ApertureBladePainter(
+                            borderWidth: apertureBorderWidth),
                       ),
                     ),
                   ),

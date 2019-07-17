@@ -18,60 +18,43 @@ class Aperture extends StatelessWidget {
   final AnimationController animationController;
   final Animation curvedAnimation;
 
-  Aperture({
-      this.child,
+  Aperture(
+      {this.child,
       this.animationController,
       this.curvedAnimation,
       this.startOpened = true});
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
-      final radius = constraints.maxWidth * 0.5;
-      final bladeWidth = constraints.maxWidth * 0.75;
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final bladeWidth = constraints.maxWidth * 0.78;
 
-      return Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          if (child != null)
+        return Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            if (child != null)
+              ClipOval(
+                clipBehavior: Clip.antiAlias,
+                child: Container(
+                  alignment: Alignment.center,
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                  child: child,
+                ),
+              ),
             ClipOval(
-              clipper: RadiusClipper(radius: radius),
-              child: Container(
-                alignment: Alignment.center,
-                width: constraints.maxWidth,
-                height: constraints.maxHeight,
-                child: child,
+              clipBehavior: Clip.antiAlias,
+              child: ApertureBlades(
+                bladeWidth: bladeWidth,
+                animationController: animationController,
+                curvedAnimation: curvedAnimation,
+                startOpened: startOpened,
               ),
             ),
-          ClipOval(
-            clipper: RadiusClipper(radius: radius),
-            clipBehavior: Clip.antiAlias,
-            child: ApertureBlades(
-              bladeWidth: bladeWidth,
-              animationController: animationController,
-              curvedAnimation: curvedAnimation,
-              startOpened: startOpened,
-            ),
-          ),
-        ],
-      );
-    },);
-  }
-}
-
-class RadiusClipper extends CustomClipper<Rect> {
-  double _radius;
-
-  RadiusClipper({@required radius}) : _radius = radius;
-
-  @override
-  getClip(Size size) {
-    return Rect.fromCircle(
-        center: Offset(size.width * 0.5, size.height * 0.5), radius: _radius);
-  }
-
-  @override
-  bool shouldReclip(CustomClipper oldClipper) {
-    return false;
+          ],
+        );
+      },
+    );
   }
 }
