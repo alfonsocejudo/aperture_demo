@@ -21,16 +21,53 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
+class MyHomePage extends StatefulWidget {
   final String title;
+
+  MyHomePage({this.title});
+
+  @override
+  State<StatefulWidget> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
+  AnimationController animationController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    animationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 2200));
+
+    animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Future.delayed(const Duration(milliseconds: 400), () {
+          animationController.reverse();
+        });
+      } else if (status == AnimationStatus.dismissed) {
+        Future.delayed(const Duration(milliseconds: 400), () {
+          animationController.forward();
+        });
+      }
+    });
+
+    animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: Text(widget.title),
         ),
         body: Center(
           child: Stack(
@@ -47,6 +84,7 @@ class MyHomePage extends StatelessWidget {
                 width: 300.0,
                 height: 300.0,
                 child: Aperture(
+                  animationController: animationController,
                   child: Image.asset('images/dope.png'),
                 ),
               ),

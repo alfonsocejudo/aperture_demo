@@ -48,18 +48,6 @@ class _ApertureBladesState extends State<ApertureBlades>
         : AnimationController(
             vsync: this, duration: Duration(milliseconds: 2200));
 
-    animationController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        Future.delayed(const Duration(milliseconds: 400), () {
-          animationController.reverse();
-        });
-      } else if (status == AnimationStatus.dismissed) {
-        Future.delayed(const Duration(milliseconds: 400), () {
-          animationController.forward();
-        });
-      }
-    });
-
     curvedAnimation = widget.curvedAnimation != null
         ? widget.curvedAnimation
         : CurvedAnimation(
